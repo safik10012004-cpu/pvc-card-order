@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PVC Card Order | Smart Computer Centre</title>
+<style>
+:root{--ink:#14213d;--muted:#667085;--bg:#f5f7fb;--card:#fff;--line:#e5e7eb;--blue:#2563eb}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans Bengali",sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,#14213d,#2563eb);color:#fff;text-align:center;padding:34px 18px 58px}header h1{margin:0 0 8px;font-size:30px}header p{margin:0;opacity:.9}
+.wrap{max-width:900px;margin:-28px auto 40px;padding:0 16px}.card{background:#fff;border-radius:18px;padding:24px;margin-bottom:18px;box-shadow:0 8px 30px #14213d18}
+h2{margin:0 0 18px;font-size:21px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+label{display:block;font-weight:700;font-size:14px;margin-bottom:7px}input,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:15px}textarea{min-height:75px}
+.types{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.type{border:1.5px solid var(--line);padding:14px;border-radius:12px;text-align:center}.type input{width:auto}
+.full{grid-column:1/-1}.upload{border:2px dashed #cbd5e1;padding:15px;text-align:center;border-radius:12px;color:var(--muted)}.upload input{border:0}
+.address{background:#f8fafc;border:1px solid var(--line);padding:16px;border-radius:12px}
+.btn{border:0;border-radius:11px;padding:14px 20px;font-weight:700;cursor:pointer;font-size:15px;background:#16a34a;color:#fff}.note{font-size:13px;color:var(--muted);line-height:1.5}
+.success{display:none;background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;padding:15px;border-radius:12px;margin-top:15px}
+@media(max-width:650px){.grid,.types{grid-template-columns:1fr}.full{grid-column:auto}.card{padding:18px}header h1{font-size:25px}}
+</style>
+</head>
+<body>
+<header><h1>🪪 PVC Card Printing</h1><p>Smart Computer Centre — Online Home Delivery</p></header>
+<main class="wrap">
+
+<section class="card">
+<h2>কার্ড নির্বাচন করুন</h2>
+<div class="types">
+<label class="type"><input type="radio" name="card" value="Voter ID PVC Card" checked> 🗳️ Voter ID</label>
+<label class="type"><input type="radio" name="card" value="Ration Card PVC Card"> 🍚 Ration Card</label>
+<label class="type"><input type="radio" name="card" value="Other PVC Card"> 🪪 Other PVC Card</label>
+</div>
+</section>
+
+<form id="orderForm" class="card">
+<h2>অর্ডারের তথ্য</h2>
+<div class="grid">
+<div><label>আপনার নাম *</label><input id="name" required placeholder="পূর্ণ নাম"></div>
+<div><label>মোবাইল নম্বর *</label><input id="phone" required inputmode="tel" placeholder="10 digit mobile number"></div>
+
+<div class="full"><label>Card-এর Front ছবি *</label><div class="upload">ছবি/PDF নির্বাচন করুন<input id="front" type="file" accept="image/*,.pdf" required></div></div>
+<div class="full"><label>Card-এর Back ছবি</label><div class="upload">প্রয়োজন হলে ছবি/PDF দিন<input id="back" type="file" accept="image/*,.pdf"></div></div>
+
+<div><label>Quantity *</label><input id="qty" type="number" min="1" value="1" oninput="updatePrice()"></div>
+<div><label>Total Amount</label><input id="amount" value="₹75" readonly></div>
+
+<div class="full address">
+<h3 style="margin-top:0">🏠 Home Delivery Address</h3>
+<div class="grid">
+<div><label>House/Building No.</label><input id="house" placeholder="বাড়ি/ঘর নম্বর"></div>
+<div><label>Village/Locality *</label><input id="village" required placeholder="গ্রাম / এলাকা"></div>
+<div><label>Post Office *</label><input id="po" required placeholder="পোস্ট অফিস"></div>
+<div><label>Police Station *</label><input id="ps" required placeholder="থানা"></div>
+<div><label>District *</label><input id="district" required placeholder="জেলা"></div>
+<div><label>State *</label><input id="state" required value="West Bengal"></div>
+<div><label>PIN Code *</label><input id="pin" required inputmode="numeric" maxlength="6" placeholder="6 digit PIN"></div>
+</div>
+</div>
+
+<div class="full"><label>💳 Transaction ID / UTR *</label><input id="txn" required placeholder="Payment করার পর Transaction ID দিন"></div>
+<div class="full"><label>অতিরিক্ত তথ্য</label><textarea id="notes" placeholder="যেমন: Front & Back একই কার্ডে চাই"></textarea></div>
+</div>
+
+<div style="margin:15px 0;padding:15px;border-radius:12px;background:#eff6ff;border:1px solid #bfdbfe">
+<strong>💰 PVC Card Price</strong><br>1 Card = ₹75 &nbsp; | &nbsp; 2 Cards = ₹150 &nbsp; | &nbsp; 3 Cards = ₹210
+</div>
+
+<section style="margin-top:18px">
+<h2>💳 Online Payment</h2>
+<div style="padding:18px;border:1px solid #e5e7eb;border-radius:12px;text-align:center">
+<strong>UPI Payment</strong><div style="font-size:22px;font-weight:800;margin:8px">₹<span id="payAmount">75</span></div>
+<img src="pvc_payment_qr.png" alt="UPI Payment QR" style="width:min(320px,100%);border-radius:12px;margin:10px auto;display:block">
+<div style="font-weight:700">UPI ID: safokuli@oksbi</div>
+<p class="note">QR scan করে payment করুন, তারপর Transaction ID/UTR দিন।</p>
+</div>
+</section>
+
+<button class="btn" type="submit">📲 WhatsApp-এ Order করুন</button>
+<div id="success" class="success"></div>
+</form>
+
+<section class="card"><h2>📦 অর্ডার করার নিয়ম</h2><p>Card নির্বাচন করুন → তথ্য ও ছবি দিন → Home Delivery address দিন → QR scan করে payment করুন → Transaction ID দিন → WhatsApp-এ Order পাঠান।</p></section>
+</main>
+<footer style="text-align:center;color:#667085;padding:0 16px 35px;font-size:13px">© Smart Computer Centre · PVC Card Printing Service</footer>
+
+<script>
+const SHOP_WHATSAPP="917042046147";
+function calculatePrice(q){q=parseInt(q||1,10);if(q===1)return 75;if(q===2)return 150;if(q===3)return 210;return q*70}
+function updatePrice(){const t=calculatePrice(document.getElementById("qty").value);document.getElementById("amount").value="₹"+t;document.getElementById("payAmount").textContent=t}
+updatePrice();
+
+document.getElementById("orderForm").addEventListener("submit",function(e){
+e.preventDefault();
+const card=document.querySelector('input[name="card"]:checked').value,name=document.getElementById("name").value.trim(),phone=document.getElementById("phone").value.trim(),qty=document.getElementById("qty").value,amount=calculatePrice(qty),txn=document.getElementById("txn").value.trim(),notes=document.getElementById("notes").value.trim();
+const address=[document.getElementById("house").value.trim(),document.getElementById("village").value.trim(),"PO: "+document.getElementById("po").value.trim(),"PS: "+document.getElementById("ps").value.trim(),document.getElementById("district").value.trim(),document.getElementById("state").value.trim(),"PIN: "+document.getElementById("pin").value.trim()].filter(Boolean).join(", ");
+const orderId="PVC"+Date.now().toString().slice(-7);
+const msg=`PVC CARD ORDER%0A%0AOrder ID: ${orderId}%0ACard: ${card}%0AName: ${name}%0AMobile: ${phone}%0AQuantity: ${qty}%0ATotal: ₹${amount}%0ADELIVERY ADDRESS: ${address}%0ATransaction ID: ${txn}%0ANotes: ${notes||"None"}%0A%0Aআমি Card-এর Front/Back file WhatsApp-এ পাঠাব।`;
+document.getElementById("success").style.display="block";document.getElementById("success").innerHTML=`অর্ডার প্রস্তুত হয়েছে। <b>${orderId}</b><br>WhatsApp খুলে Send চাপুন।`;
+window.open("https://wa.me/"+SHOP_WHATSAPP+"?text="+msg,"_blank");
+});
+</script>
+</body>
+</html>
